@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author leoze
  */
-public class Task {
+public class Task implements Comparable<Task> {
 
     private String owner;
     private String description;
@@ -90,8 +90,10 @@ public class Task {
     public String toString() {
         return "Task{" + "owner=" + owner + ", description=" + description + ", deadline=" + deadline + '}';
     }
-    
-    
-    
-    
+
+    @Override
+    public int compareTo(Task otherTask) {
+        return this.deadline.compareTo(otherTask.getDeadline());
+    }
+
 }
