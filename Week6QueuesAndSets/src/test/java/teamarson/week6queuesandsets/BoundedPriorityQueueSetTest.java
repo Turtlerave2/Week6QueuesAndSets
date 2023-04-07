@@ -85,17 +85,74 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of isFull method, of class BoundedPriorityQueueSet.
+     * Test of isFull method, of class BoundedPriorityQueueSet. Empty queue
      */
     @Test
-    public void testIsFull() {
-        System.out.println("isFull");
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
+    public void testIsFullEmpty() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
         boolean expResult = false;
-        boolean result = instance.isFull();
+        boolean result = queue.isFull();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        int expectedSize = 0;
+        int resultsize = queue.size();
+        assertEquals(expectedSize, resultsize);
+    }
+
+    /**
+     * Test of isFull method, of class BoundedPriorityQueueSet. Queue with some
+     * values but space still available
+     */
+    @Test
+    public void testIsFullSomeValues() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "headache", LocalDate.of(2023, 4, 15));
+        queue.add(a);
+        boolean expResult = false;
+        boolean result = queue.isFull();
+        assertEquals(expResult, result);
+
+        int expectedSize = 1;
+        int resultsize = queue.size();
+        assertEquals(expectedSize, resultsize);
+
+    }
+
+    /**
+     * Test of isFull method, of class BoundedPriorityQueueSet. Queue with full
+     * size
+     */
+    @Test
+    public void testIsFullFulQueue() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
+        Task b = new Task("Alice", "headache", LocalDate.of(2023, 5, 2));
+        Task c = new Task("Alice", "headache", LocalDate.of(2023, 5, 3));
+        Task d = new Task("Alice", "headache", LocalDate.of(2023, 5, 4));
+        Task e = new Task("Alice", "headache", LocalDate.of(2023, 5, 5));
+        Task f = new Task("Alice", "headache", LocalDate.of(2023, 5, 6));
+        Task g = new Task("Alice", "headache", LocalDate.of(2023, 5, 7));
+        Task h = new Task("Alice", "headache", LocalDate.of(2023, 5, 8));
+        Task i = new Task("Alice", "headache", LocalDate.of(2023, 5, 9));
+        Task j = new Task("Alice", "headache", LocalDate.of(2023, 5, 10));
+        queue.add(a);
+        queue.add(b);
+        queue.add(c);
+        queue.add(d);
+        queue.add(e);
+        queue.add(f);
+        queue.add(g);
+        queue.add(h);
+        queue.add(i);
+        queue.add(j);
+        boolean expResult = true;
+        boolean result = queue.isFull();
+        assertEquals(expResult, result);
+        System.out.println("Size of the queue " + queue.size());
+        int expectedSize = 10;
+        int resultsize = queue.size();
+        assertEquals(expectedSize, resultsize);
+
     }
 
     /**
