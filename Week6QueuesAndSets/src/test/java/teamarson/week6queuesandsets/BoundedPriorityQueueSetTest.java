@@ -225,21 +225,21 @@ public class BoundedPriorityQueueSetTest {
         Task expectedNew = a;
         Task actualNew = queue.peek();
         assertEquals(expectedNew, actualNew);
-        
+
         assertFalse(queue.isEmpty());
 
     }
-    
+
     /**
-     * Test of add method, of class BoundedPriorityQueueSet.
-     * Adding to an empty queue
+     * Test of add method, of class BoundedPriorityQueueSet. Adding to an empty
+     * queue
      */
     @Test
     public void testAddEmpty() {
         BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
         Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
         queue.add(a);
-       
+
         Task excpected = a;
         Task actual = queue.peek();
         assertEquals(excpected, actual);
@@ -247,13 +247,14 @@ public class BoundedPriorityQueueSetTest {
         int expectedSize = 1;
         int actualSize = queue.size();
         assertEquals(expectedSize, actualSize);
- 
+
         assertFalse(queue.isEmpty());
 
     }
-     /**
+
+    /**
      * Test of add method, of class BoundedPriorityQueueSet.
-     * Adding to a queue with task in there already
+     * Adding to a queue but with higher priority
      */
     @Test
     public void testAddPriorityTop() {
@@ -264,7 +265,7 @@ public class BoundedPriorityQueueSetTest {
         queue.add(a);
         queue.add(b);
         queue.add(c);
-       
+
         Task excpected = c;
         Task actual = queue.peek();
         assertEquals(excpected, actual);
@@ -272,7 +273,69 @@ public class BoundedPriorityQueueSetTest {
         int expectedSize = 3;
         int actualSize = queue.size();
         assertEquals(expectedSize, actualSize);
- 
+
+        assertFalse(queue.isEmpty());
+
+    }
+
+    /**
+     * Test of add method, of class BoundedPriorityQueueSet. Adding to a queue
+     * with the task in there already
+     */
+    @Test
+    public void testAddDuplicate() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
+        Task b = new Task("Adam", "Lost leg", LocalDate.of(2023, 5, 3));
+        Task c = new Task("Marge", "headache", LocalDate.of(2023, 5, 1));
+        Task d = new Task("Marge", "headache", LocalDate.of(2023, 5, 1));
+
+        queue.add(a);
+        queue.add(b);
+        queue.add(c);
+        assertThrows(DuplicateElementException.class, () -> {
+            queue.add(d);
+        });
+
+    }
+
+    /**
+     * Test of add method, of class BoundedPriorityQueueSet. 
+     * Adding to a full queue, throw exception 
+     * 
+     */
+    @Test
+    public void testAddFull() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
+        Task b = new Task("John", "Cancer", LocalDate.of(2023, 5, 2));
+        Task c = new Task("Pierce", "lost pinky", LocalDate.of(2023, 5, 3));
+        Task d = new Task("Harry", "Dialisis", LocalDate.of(2023, 5, 4));
+        Task e = new Task("Jonathen", "Stab Wound", LocalDate.of(2023, 5, 5));
+        Task f = new Task("Homer", "Stubbed toe", LocalDate.of(2023, 5, 6));
+        Task g = new Task("Peter", "Broken toe", LocalDate.of(2023, 5, 7));
+        Task h = new Task("Bart", "Lost ear", LocalDate.of(2023, 5, 8));
+        Task i = new Task("Stewie", "1st degree burn", LocalDate.of(2023, 5, 9));
+        Task j = new Task("Lisa", "Stomach bug", LocalDate.of(2023, 5, 10));
+        Task k = new Task("Lisa", "Stomach bug", LocalDate.of(2023, 5, 11));
+        queue.add(a);
+        queue.add(b);
+        queue.add(c);
+        queue.add(d);
+        queue.add(e);
+        queue.add(f);
+        queue.add(g);
+        queue.add(h);
+        queue.add(i);
+        queue.add(j);
+        assertThrows(IllegalArgumentException.class, () -> {
+            queue.add(k);
+        });
+
+        int expectedSize = 10;
+        int actualSize = queue.size();
+        assertEquals(expectedSize, actualSize);
+
         assertFalse(queue.isEmpty());
 
     }
