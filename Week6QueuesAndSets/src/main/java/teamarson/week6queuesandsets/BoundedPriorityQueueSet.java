@@ -27,7 +27,24 @@ public class BoundedPriorityQueueSet {
         this.taskSet = new HashSet<>();
     }
     
+     public BoundedPriorityQueueSet(int maxSize) {
+        this.maxSize = maxSize;
+        this.size = 0;
+        this.first = null;
+        this.taskSet = new HashSet<>();
+    }
     
+      public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
+    public boolean isFull() {
+        return size == maxSize;
+    }
     
     private class Node {
         Task data;
