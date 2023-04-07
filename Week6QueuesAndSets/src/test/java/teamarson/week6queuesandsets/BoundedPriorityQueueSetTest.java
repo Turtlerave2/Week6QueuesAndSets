@@ -189,19 +189,48 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of remove method, of class BoundedPriorityQueueSet.
+     * Test of remove method, of class BoundedPriorityQueueSet. trying to remove
+     * from a empty queue
      */
     @Test
-    public void testRemove() {
-        System.out.println("remove");
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        Task expResult = null;
-        Task result = instance.remove();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testRemoveFromEmpty() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        assertThrows(NoSuchElementException.class, () -> {
+            queue.remove();
+        });
     }
 
+    /**
+     * Test of remove method, of class BoundedPriorityQueueSet. trying to remove
+     * Remove from queue with few values in it
+     */
+    @Test
+    public void testRemoveSomeValues() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
+        Task b = new Task("Alice", "Lost leg", LocalDate.of(2023, 5, 3));
+        Task c = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
+        queue.add(a);
+        queue.add(b);
+        queue.add(c);
+
+        Task excpected = c;
+        Task actual = queue.remove();
+        assertEquals(excpected, actual);
+
+        int expectedSize = 2;
+        int actualSize = queue.size();
+        assertEquals(expectedSize, actualSize);
+
+        Task expectedNew = a;
+        Task actualNew = queue.peek();
+        assertEquals(expectedNew, actualNew);
+        
+        assertFalse(queue.isEmpty());
+
+    }
+
+    
     /**
      * Test of add method, of class BoundedPriorityQueueSet.
      */
