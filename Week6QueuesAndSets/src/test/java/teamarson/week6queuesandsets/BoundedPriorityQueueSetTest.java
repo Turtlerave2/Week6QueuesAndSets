@@ -5,6 +5,7 @@
 package teamarson.week6queuesandsets;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -156,17 +157,35 @@ public class BoundedPriorityQueueSetTest {
     }
 
     /**
-     * Test of peek method, of class BoundedPriorityQueueSet.
+     * Test of peek method, of class BoundedPriorityQueueSet. Empty queue-so
+     * throws the exception
      */
     @Test
-    public void testPeek() {
-        System.out.println("peek");
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        Task expResult = null;
-        Task result = instance.peek();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testPeekEmptyException() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        assertThrows(NoSuchElementException.class, () -> {
+            queue.peek();
+            System.out.println("Queue is empty");
+        });
+    }
+
+    /**
+     * Test of peek method, of class BoundedPriorityQueueSet. Empty queue-so has
+     * values in the queue with different order of priority
+     */
+    @Test
+    public void testPeekWithValues() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
+        Task b = new Task("Alice", "Lost leg", LocalDate.of(2023, 5, 3));
+        Task c = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
+        queue.add(a);
+        queue.add(b);
+        queue.add(c);
+        System.out.println(queue.peek());
+        Task expected = c;
+        Task actual = queue.peek();
+        assertEquals(expected, actual);
     }
 
     /**
