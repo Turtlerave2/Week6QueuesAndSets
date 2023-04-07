@@ -127,15 +127,15 @@ public class BoundedPriorityQueueSetTest {
     public void testIsFullFulQueue() {
         BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
         Task a = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
-        Task b = new Task("Alice", "headache", LocalDate.of(2023, 5, 2));
-        Task c = new Task("Alice", "headache", LocalDate.of(2023, 5, 3));
-        Task d = new Task("Alice", "headache", LocalDate.of(2023, 5, 4));
-        Task e = new Task("Alice", "headache", LocalDate.of(2023, 5, 5));
-        Task f = new Task("Alice", "headache", LocalDate.of(2023, 5, 6));
-        Task g = new Task("Alice", "headache", LocalDate.of(2023, 5, 7));
-        Task h = new Task("Alice", "headache", LocalDate.of(2023, 5, 8));
-        Task i = new Task("Alice", "headache", LocalDate.of(2023, 5, 9));
-        Task j = new Task("Alice", "headache", LocalDate.of(2023, 5, 10));
+        Task b = new Task("John", "Cancer", LocalDate.of(2023, 5, 2));
+        Task c = new Task("Pierce", "lost pinky", LocalDate.of(2023, 5, 3));
+        Task d = new Task("Harry", "Dialisis", LocalDate.of(2023, 5, 4));
+        Task e = new Task("Jonathen", "Stab Wound", LocalDate.of(2023, 5, 5));
+        Task f = new Task("Homer", "Stubbed toe", LocalDate.of(2023, 5, 6));
+        Task g = new Task("Peter", "Broken toe", LocalDate.of(2023, 5, 7));
+        Task h = new Task("Bart", "Lost ear", LocalDate.of(2023, 5, 8));
+        Task i = new Task("Stewie", "!st degree burn", LocalDate.of(2023, 5, 9));
+        Task j = new Task("Lisa", "Stomach bug", LocalDate.of(2023, 5, 10));
         queue.add(a);
         queue.add(b);
         queue.add(c);
@@ -177,8 +177,8 @@ public class BoundedPriorityQueueSetTest {
     public void testPeekWithValues() {
         BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
         Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
-        Task b = new Task("Alice", "Lost leg", LocalDate.of(2023, 5, 3));
-        Task c = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
+        Task b = new Task("John", "Lost leg", LocalDate.of(2023, 5, 3));
+        Task c = new Task("Adam", "headache", LocalDate.of(2023, 5, 1));
         queue.add(a);
         queue.add(b);
         queue.add(c);
@@ -208,8 +208,8 @@ public class BoundedPriorityQueueSetTest {
     public void testRemoveSomeValues() {
         BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
         Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
-        Task b = new Task("Alice", "Lost leg", LocalDate.of(2023, 5, 3));
-        Task c = new Task("Alice", "headache", LocalDate.of(2023, 5, 1));
+        Task b = new Task("Adam", "Lost leg", LocalDate.of(2023, 5, 3));
+        Task c = new Task("Leon", "headache", LocalDate.of(2023, 5, 1));
         queue.add(a);
         queue.add(b);
         queue.add(c);
@@ -229,21 +229,52 @@ public class BoundedPriorityQueueSetTest {
         assertFalse(queue.isEmpty());
 
     }
-
     
     /**
      * Test of add method, of class BoundedPriorityQueueSet.
+     * Adding to an empty queue
      */
     @Test
-    public void testAdd() {
-        System.out.println("add");
-        Task task = null;
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        int expResult = 0;
-        int result = instance.add(task);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testAddEmpty() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
+        queue.add(a);
+       
+        Task excpected = a;
+        Task actual = queue.peek();
+        assertEquals(excpected, actual);
+
+        int expectedSize = 1;
+        int actualSize = queue.size();
+        assertEquals(expectedSize, actualSize);
+ 
+        assertFalse(queue.isEmpty());
+
+    }
+     /**
+     * Test of add method, of class BoundedPriorityQueueSet.
+     * Adding to a queue with task in there already
+     */
+    @Test
+    public void testAddPriorityTop() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "Burned", LocalDate.of(2023, 5, 2));
+        Task b = new Task("Adam", "Lost leg", LocalDate.of(2023, 5, 3));
+        Task c = new Task("Marge", "headache", LocalDate.of(2023, 5, 1));
+        queue.add(a);
+        queue.add(b);
+        queue.add(c);
+       
+        Task excpected = c;
+        Task actual = queue.peek();
+        assertEquals(excpected, actual);
+
+        int expectedSize = 3;
+        int actualSize = queue.size();
+        assertEquals(expectedSize, actualSize);
+ 
+        assertFalse(queue.isEmpty());
+
     }
 
 }
