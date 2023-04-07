@@ -6,6 +6,7 @@
 package teamarson.week6queuesandsets;
 
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
@@ -46,6 +47,37 @@ public class BoundedPriorityQueueSet {
         return size == maxSize;
     }
     
+     public Task peek() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("The queue is empty.");
+        }
+        return first.data;
+    }
+    
+     public Task remove() {
+        if (isEmpty()) {
+            throw new NoSuchElementException("The queue is empty.");
+        }
+        Node removedNode = first;
+        first = first.next;
+        taskSet.remove(removedNode.data);
+        size--;
+        return removedNode.data;
+    }
+     
+     private int getPosition(Task task) {
+        Node curr = first;
+        int position = 1;
+        while (curr != null) {
+            if (curr.data.equals(task)) {
+                return position;
+            }
+            curr = curr.next;
+            position++;
+        }
+        return -1;
+    }
+
     private class Node {
         Task data;
         Node next;
