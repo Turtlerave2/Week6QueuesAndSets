@@ -106,7 +106,7 @@ public class BoundedPriorityQueueSet {
      * @return the position of the Task in the queue, or -1 if the Task is not
      * in the queue
      */
-    private int getPosition(Task task) {
+    public int getPosition(Task task) {
         Node curr = first;
         int position = 1;
         while (curr != null) {
