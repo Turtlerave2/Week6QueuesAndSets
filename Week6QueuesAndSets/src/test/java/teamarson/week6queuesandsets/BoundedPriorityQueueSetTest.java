@@ -41,24 +41,47 @@ public class BoundedPriorityQueueSetTest {
         queue.add(a);
         queue.add(b);
         queue.add(c);
-        
+
         int expectedSize = 3;
         int actualSize = queue.size();
         assertEquals(expectedSize, actualSize);
     }
 
     /**
-     * Test of isEmpty method, of class BoundedPriorityQueueSet.
+     * Test of isEmpty method, of class BoundedPriorityQueueSet. Test the queue
+     * is empty
      */
     @Test
     public void testIsEmpty() {
-        System.out.println("isEmpty");
-        BoundedPriorityQueueSet instance = new BoundedPriorityQueueSet();
-        boolean expResult = false;
-        boolean result = instance.isEmpty();
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        boolean expResult = true;
+        boolean result = queue.isEmpty();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        int expectedSize = 0;
+        int resultsize = queue.size();
+        assertEquals(expectedSize, resultsize);
+
+    }
+
+    /**
+     * Test of isEmpty method, of class BoundedPriorityQueueSet. Test the queue
+     * is empty
+     */
+    @Test
+    public void testIsEmptyWithValue() {
+        BoundedPriorityQueueSet queue = new BoundedPriorityQueueSet();
+        Task a = new Task("Alice", "headache", LocalDate.of(2023, 4, 15));
+        queue.add(a);
+        boolean expResult = false;
+        boolean result = queue.isEmpty();
+        assertEquals(expResult, result);
+
+        int expectedSize = 1;
+        int resultsize = queue.size();
+        System.out.println("Size of queue " + queue.size());
+        assertEquals(expectedSize, resultsize);
+
     }
 
     /**
