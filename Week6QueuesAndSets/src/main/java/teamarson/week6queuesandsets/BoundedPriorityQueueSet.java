@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Project/Maven2/JavaApp/src/main/java/${packagePath}/${mainClassName}.java to edit this template
  */
-
 package teamarson.week6queuesandsets;
 
 import java.util.HashSet;
@@ -19,42 +18,41 @@ public class BoundedPriorityQueueSet {
     private int size;
     private Node first;
     private Set<Task> taskSet;
-    
-    
+
     public BoundedPriorityQueueSet() {
         this.maxSize = 10;
         this.size = 0;
         this.first = null;
         this.taskSet = new HashSet<>();
     }
-    
-     public BoundedPriorityQueueSet(int maxSize) {
+
+    public BoundedPriorityQueueSet(int maxSize) {
         this.maxSize = maxSize;
         this.size = 0;
         this.first = null;
         this.taskSet = new HashSet<>();
     }
-    
-      public int size() {
+
+    public int size() {
         return size;
     }
 
     public boolean isEmpty() {
         return size == 0;
     }
-    
+
     public boolean isFull() {
         return size == maxSize;
     }
-    
-     public Task peek() {
+
+    public Task peek() {
         if (isEmpty()) {
             throw new NoSuchElementException("The queue is empty.");
         }
         return first.data;
     }
-    
-     public Task remove() {
+
+    public Task remove() {
         if (isEmpty()) {
             throw new NoSuchElementException("The queue is empty.");
         }
@@ -64,8 +62,8 @@ public class BoundedPriorityQueueSet {
         size--;
         return removedNode.data;
     }
-     
-     private int getPosition(Task task) {
+
+    private int getPosition(Task task) {
         Node curr = first;
         int position = 1;
         while (curr != null) {
@@ -78,7 +76,38 @@ public class BoundedPriorityQueueSet {
         return -1;
     }
 
+    public int add(Task task) {
+        if (taskSet.contains(task)) {
+            throw new DuplicateElementException();
+        }
+        if (isFull()) {
+            throw new IllegalStateException("The queue is full.");
+        }
+
+        Node newNode = new Node(task);
+        if (isEmpty()) {
+            first = newNode;
+        } else if (task.compareTo(first.data) < 0) {
+            newNode.next = first;
+            first = newNode;
+        } else {
+            Node prev = first;
+            Node current = first.next;
+            while (current != null && task.compareTo(current.data) >= 0) {
+                prev = current;
+                current = current.next;
+            }
+            prev.next = newNode;
+            newNode.next = current;
+        }
+        taskSet.add(task);
+        size++;
+        return getPosition(task);
+
+    }
+
     private class Node {
+
         Task data;
         Node next;
 
@@ -87,6 +116,5 @@ public class BoundedPriorityQueueSet {
             this.next = null;
         }
     }
-    
-    
+
 }
