@@ -132,7 +132,7 @@ public class BoundedPriorityQueueSet {
             throw new DuplicateElementException();
         }
         if (isFull()) {
-            throw new IllegalStateException("The queue is full.");
+            throw new IllegalArgumentException("The queue is full.");
         }
         
         Node newNode = new Node(task);
