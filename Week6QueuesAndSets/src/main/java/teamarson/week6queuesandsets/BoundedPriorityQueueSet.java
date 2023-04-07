@@ -9,7 +9,7 @@ package teamarson.week6queuesandsets;
  *
  * @author leoze
  */
-public class Week6QueuesAndSets {
+public class BoundedPriorityQueueSet {
 
     public static void main(String[] args) {
         System.out.println("Project to do here!");
